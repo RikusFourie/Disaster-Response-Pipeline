@@ -26,6 +26,18 @@ warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 warnings.filterwarnings('ignore')
 
 def load_data(database_filepath):
+    """
+    Function Description:
+        Load data from csv.
+    
+    Input:
+        database_filepath: Filepath cleaned database file
+        
+    Output:
+        List (X): List of massages
+        List (Y): List of one-hot encoded categories
+        List (cat_names): List of catagory names
+    """
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('ClassifiedMessages', engine)
     X = df.message.values
@@ -36,6 +48,16 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Function Description:
+        Tokanizer for text
+    
+    Input:
+        text: Text messages
+        
+    Output:
+        Tokenized words (List)
+    """
     #replacing urls
     urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
     for i in urls:
@@ -54,6 +76,17 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Function Description:
+        Build LinearSVC model using pipeline and then 
+        use Gridsearch to search for the best paramaters
+    
+    Input:
+        None
+        
+    Output:
+        Cross-Validated classifier 
+    """
     pipeline = Pipeline([
         ('features', FeatureUnion([
 
@@ -79,6 +112,22 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Function Description:
+        Evaulate the model with this function.
+    
+    Input:
+        model: The build model that needs to be evaluated
+        X_test: X_test data
+        Y_test: Y_test data
+        category_names: List of catagory names
+        
+    Prints:
+        This function will print the results of the evaluation when called
+        
+    Output:
+        None
+    """
     X_pred = model.predict(X_test)
     
     eval_dict={'column':[],'f1_score':[],'precision':[],'recall':[]}
@@ -96,6 +145,17 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Function Description:
+        Save the model to use for classification at a later stage
+    
+    Input:
+        model: The build model with best found parameters
+        model_filepath: Filepath of where classifier needs to be saved
+        
+    Output:
+        None
+    """
     pickle.dump(model, open(model_filepath, "wb"))
 
 

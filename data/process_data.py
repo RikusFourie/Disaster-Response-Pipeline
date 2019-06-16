@@ -5,6 +5,17 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Function Description:
+        Load data from csv.
+    
+    Input:
+        messages_filepath: Filepath to messages csv file
+        categories_filepath: Filepath to categories csv file
+        
+    Output:
+        Dataframe: A merged dataframe of messages and categories. 
+    """
     #Import Data
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
@@ -16,6 +27,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Function Description:
+        Clean dataframe to be usable in machine-learning model.
+    
+    Input:
+        Dataframe: Unstructured dataframe that consists of messages and categories.
+        
+    Output:
+        Dataframe: Cleaned dataframe that can be used in machine-learning model.
+    """
     #Split categories into separate category columns
     categories = df.categories.str.split(";", n=36,expand=True)
     
@@ -43,8 +64,16 @@ def clean_data(df):
 
 
 def save_data(df, database_filepath):
+    """
+    Function Description:
+        Save dataframe as database.
+    
+    Input:
+        Dataframe: Cleaned dataframe
+        Filepath: Save location of database file
+    """
     engine = create_engine('sqlite:///' + database_filepath)
-    df.to_sql('ClassifiedMessages', engine, index=False)
+    df.to_sql('ClassifiedMessages', engine, index=False,if_exists='replace')
 
 
 def main():
