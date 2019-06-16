@@ -15,6 +15,16 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
+    """
+    Function Description:
+        Tokanizer for text
+    
+    Input:
+        text: Text messages
+        
+    Output:
+        Tokenized words (List)
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -37,6 +47,16 @@ model = joblib.load("models/classifier.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
+    """
+    Function Description:
+        Funtion to display homepage and display graphs
+    
+    Input:
+        None
+        
+    Output:
+        Rendered HTML
+    """
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
@@ -186,6 +206,16 @@ def index():
 # web page that handles user query and displays model results
 @app.route('/go')
 def go():
+    """
+    Function Description:
+        Classify user input into catagories.
+    
+    Input:
+        None
+        
+    Output:
+        Rendered HTML
+    """
     # save user input in query
     query = request.args.get('query', '') 
 
