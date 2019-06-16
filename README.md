@@ -29,17 +29,20 @@ The project contains the following files
     └── README.md
 
 ## Instructions:
-1. Run the following commands in the project's root directory to set up your database and model.
+1. Clone GIT repository 
+
+    - git clone https://github.com/RikusFourie/Disaster-Response-Pipeline.git
+2. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
     - To run ML pipeline that trains classifier and saves
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
-2. Run the following command in the app's directory to run your web app. (Step 1 can be skipped if you wish to use the pretrained model)
+3. Run the following command in the app's directory to run your web app. (Step 2 can be skipped if you wish to use the pretrained model)
 
     - `python run.py`
 
-3. Go to http://127.0.0.1:3001/
+4. Go to http://127.0.0.1:3001/
 
 ## Homepage Preview
 ![HomePagePreview](https://user-images.githubusercontent.com/41228935/59554408-abb8ce00-8fa2-11e9-9612-a1090c190503.png)
